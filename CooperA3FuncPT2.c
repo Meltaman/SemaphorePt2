@@ -6,12 +6,12 @@
 
 #include "CooperA3PT2.h"
 
-//	Create and initialize a semaphore with a value of 1
+//  Create and initialize a semaphore with a value of 1
 int initsem(key_t semkey){
     int semid;
     int status = 0;
 
-    //	Creates a semaphore set containing a single semaphore
+    //  Creates a semaphore set containing a single semaphore
     if((semid = semget(semkey, 1, SEMPERM|IPC_CREAT|IPC_EXCL)) == -1)	{
         if(errno == EEXIST)
             semid = semget(semkey, 1, 0);
@@ -19,7 +19,7 @@ int initsem(key_t semkey){
         semun arg;
         arg.val = 1;
 
-        //	Sets the semval parameter of the semaphore to 1
+        //  Sets the semval parameter of the semaphore to 1
         status = semctl(semid, 0, SETVAL, arg);
     }
 
@@ -59,7 +59,7 @@ int waitsem(int semid){
 
 }// end waitsem
 
-//	Semaphore signal() function 
+//  Semaphore signal() function 
 int signalsem(int semid){
 
     struct sembuf v_buf;
@@ -69,7 +69,7 @@ int signalsem(int semid){
     v_buf.sem_op = 1;
     v_buf.sem_flg = SEM_UNDO;
 
-    //	semaphore signal operation
+    //  semaphore signal operation
     if(semop(semid, &v_buf, 1) == -1){
         perror("semop - Signal");
         exit(1);

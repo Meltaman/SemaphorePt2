@@ -37,7 +37,7 @@ void semrem(int semid){
 
 }// end semrem
 
-//	Semaphore wait() function 
+//  Semaphore wait() function 
 int waitsem(int semid){
     struct sembuf p_buf;
 
